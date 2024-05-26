@@ -1,6 +1,53 @@
 // 런타임 에러가 떴는데 그 문제는 for문을 while문으로 수정함으로써 해결하였다 그렇지 만 답이 틀렸다고 자꾸 떠시 지금 스트레스를 받고 있다.
 
+
+// 결국에는 다 풀었다
+
+//답 :
+class Solution {
+    fun solution(numer1: Int, denom1: Int, numer2: Int, denom2: Int): IntArray {
+        var numer = numer1*denom2+numer2*denom1
+        var denom = denom1*denom2
+        var gcf = getGCF(numer,denom)
+        println("$numer, $denom, $gcf")
+        return intArrayOf(numer/gcf, denom/gcf)
+    }
+    
+    
+    fun getGCF(n : Int, m : Int) : Int {
+        var gcm = 1
+        var min : Int
+        var max : Int
+        when {
+            (n == m) -> return n
+            (n < m) -> {
+                min = n
+                max = m
+            }
+            else -> {
+                min = m
+                max = n
+            }
+        }
+        var i = 2
+        while (i <= min) {
+            when {
+                (min%i == 0 && max%i == 0) -> {
+                    gcm *= i
+                    min /= i
+                    max /= i
+                }
+                else -> {
+                    i += 1
+                }
+            }
+        }
+        return gcm
+    }
+}
+
 /**
+
 
 Test 1 〉	통과 (0.20ms, 61.5MB)
 Test 2 〉	통과 (0.01ms, 62.2MB)
