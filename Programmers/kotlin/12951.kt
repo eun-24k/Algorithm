@@ -1,18 +1,31 @@
 class Solution {
     fun solution(s: String): String {
-        var sArray = arrayListOf<String>()
-        s.split(' ').forEach{
-            var start = ""
-            var word = it.removeRange(0, 1)
-            start = when {
-                (97 <= it[0].toInt() && it[0].toInt() <= 122) -> (it[0]-32)
-                else -> it[0]
-            }.toString()
-            var capital = word.toCharArray().filter { (65 <= it.toInt() && it.toInt() <= 90) }
-            capital?.forEach { word = word.replace(it,it+32) }
+        var answer = ""
+        s.split(' ').forEachIndexed{ index1, it1 ->
+            it1.forEachIndexed { index2, it2 ->
+                answer += when (index2) {
+                    0 -> toCapital(it2)
+                    else -> toSmallCase(it2)
+                }
+            }
+            answer += when (index1) {
+                (s.split(' ').size - 1) -> ""
+                else -> " "
+            }
             
-            sArray.add(start + word)
         }
-        return sArray.joinToString(" ")
+        return answer
+    }
+    fun toCapital(s : Char) : String {
+        return when (s.toInt() >=97 && s.toInt() <= 122) {
+            true -> (s - (97-65)).toString()
+            else -> s.toString()
+        }
+    }
+    fun toSmallCase(s : Char) : String {
+        return when (s.toInt() >=65 && s.toInt() <= 95) {
+            true -> (s + (97-65)).toString()
+            else -> s.toString()
+        }
     }
 }
